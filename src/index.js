@@ -4,9 +4,17 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Users from "./components/users";
 
+const App = () => {
+    return (
+        <>
+        <Users />
+    </>
+    )
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <Users />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
