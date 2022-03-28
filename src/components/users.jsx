@@ -5,11 +5,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 const Users = () => {
     const [users, setUsers] = useState(api.users.fetchAll());
-    const [count, setCount] = useState(api.users.fetchAll().length);
 
     const setBadgeClasses = () => {
         let classes = 'badge m-2 fs-4 ';
-        classes = classes + (count > 0 ? 'bg-primary' : 'bg-danger');
+        classes = classes + (users.length > 0 ? 'bg-primary' : 'bg-danger');
         return classes;
     }
 
@@ -22,8 +21,14 @@ const Users = () => {
         return words[2];
     }
 
-    const renderTable = () => {
-        return count > 0 ? <table className="table">
+    const handleDelete = (userId) => {
+        setUsers((prevState) => prevState.filter((user) => user !== userId));
+    }
+
+    return (
+        <>
+            <span className={setBadgeClasses()}>{users.length} {setPhrase(users.length, ['человек тусанёт','человека тусанут', 'человек тусанёт'])} с тобой сегодня</span>
+            {users.length > 0 && <table className="table">
             <thead>
             <tr>
                 <th scope="col">Имя</th>
@@ -31,7 +36,7 @@ const Users = () => {
                 <th scope="col">Профессия</th>
                 <th scope="col">Встретился, раз</th>
                 <th scope="col">Оценка</th>
-                <th scope="col"></th>
+                <th/>
             </tr>
             </thead>
             <tbody>
@@ -46,18 +51,7 @@ const Users = () => {
                 </tr>
             ))}
             </tbody>
-        </table> : null;
-    }
-
-    const handleDelete = (userId) => {
-        setUsers((prevState) => prevState.filter((user) => user !== userId));
-        setCount(prevState => prevState -1);
-    }
-
-    return (
-        <>
-            <span className={setBadgeClasses()}>{count} {setPhrase(count, ['человек тусанёт','человека тусанут', 'человек тусанёт'])} с тобой сегодня</span>
-            {renderTable()}
+        </table>}
     </>
     );
 }
